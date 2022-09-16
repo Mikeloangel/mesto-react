@@ -5,7 +5,7 @@ import btnClosePopup from '../images/btn-close.svg';
 export default class ImagePopup extends React.Component {
   render() {
     return (
-      <div className={`popup popup_${this.props.name} ${this.props.card != null && 'popup_opened' }`}>
+      <div className={`popup popup_${this.props.name} ${this.props.card && 'popup_opened' }`}>
         <div className="popup__content popup__content_viewplace">
           <button className="popup__btn-close" title="Закрыть форму" type="button" onClick={this.props.handleClose}>
             <img alt="Закрыть" className="popup__btn-close-img" src={btnClosePopup} />

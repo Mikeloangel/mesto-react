@@ -7,7 +7,6 @@ import api from "../utils/Api";
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
-
 import React from 'react';
 
 function App() {
@@ -52,77 +51,50 @@ function App() {
         api={api} />
       <Footer />
 
-      <PopupWithForm
-        name="edituser"
-        title="Редактировать профиль"
-        buttonLabel="Сохранить"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        children={(
-          <>
-            <label className="popup__form-field">
-              <input className="popup__form-input popup__user-name" id="name-input" name="popup__user-name"
-                placeholder="Представься, путешественник" required minLength="2" maxLength="40" />
-              <span className="popup__form-error name-input-error">#</span>
-            </label>
-            <label className="popup__form-field">
-              <input className="popup__form-input popup__user-description" id="description-input"
-                name="popup__user-description" placeholder="Что влечет тебя к движению?" required minLength="2"
-                maxLength="200" />
-              <span className="popup__form-error description-input-error">#</span>
-            </label></>)}
-      />
+      <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
+        <label className="popup__form-field">
+          <input className="popup__form-input popup__user-name" id="name-input" name="popup__user-name"
+            placeholder="Представься, путешественник" required minLength="2" maxLength="40" />
+          <span className="popup__form-error name-input-error">#</span>
+        </label>
+        <label className="popup__form-field">
+          <input className="popup__form-input popup__user-description" id="description-input"
+            name="popup__user-description" placeholder="Что влечет тебя к движению?" required minLength="2"
+            maxLength="200" />
+          <span className="popup__form-error description-input-error">#</span>
+        </label>
+      </PopupWithForm>
 
-      <PopupWithForm
-        name="editavatar"
-        title="Обновить аватар"
-        buttonLabel="Сохранить"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-        children={(
-          <label className="popup__form-field">
-            <input className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
-              placeholder="Адресок подскажите?" type="url" required />
-            <span className="popup__form-error avatar-input-error">#</span>
-          </label>
-        )}
-      />
+      <PopupWithForm name="editavatar" title="Обновить аватар" buttonLabel="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
+        <label className="popup__form-field">
+          <input className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
+            placeholder="Адресок подскажите?" type="url" required />
+          <span className="popup__form-error avatar-input-error">#</span>
+        </label>
+      </PopupWithForm>
 
-      <PopupWithForm
-        name="newplace"
-        title="Новое место"
-        buttonLabel="Добавить"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-        children={(
-          <>
-            <label className="popup__form-field">
-              <input className="popup__form-input popup__place-name" id="place-name-input" name="popup__place-name"
-                placeholder="Какие места привлекли?" required minLength="2" maxLength="30" />
-              <span className="popup__form-error place-name-input-error">#</span>
-            </label>
-            <label className="popup__form-field">
-              <input className="popup__form-input popup__place-url" id="place-url-input" name="popup__place-url"
-                placeholder="Адресок подскажите?" type="url" required />
-              <span className="popup__form-error place-url-input-error">#</span>
-            </label>
-          </>
-        )}
-      />
+
+
+      <PopupWithForm name="newplace" title="Новое место" buttonLabel="Добавить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
+        <label className="popup__form-field">
+          <input className="popup__form-input popup__place-name" id="place-name-input" name="popup__place-name"
+            placeholder="Какие места привлекли?" required minLength="2" maxLength="30" />
+          <span className="popup__form-error place-name-input-error">#</span>
+        </label>
+        <label className="popup__form-field">
+          <input className="popup__form-input popup__place-url" id="place-url-input" name="popup__place-url"
+            placeholder="Адресок подскажите?" type="url" required />
+          <span className="popup__form-error place-url-input-error">#</span>
+        </label>
+      </PopupWithForm>
+
+      <PopupWithForm title="Уверены?" name="confirm" buttonLabel="Удалить" onClose={closeAllPopups}></PopupWithForm>
 
       <ImagePopup
         card={selectedCard}
         name="viewplace"
         handleClick={handleCardClick}
         handleClose={closeAllPopups}
-      />
-
-      <PopupWithForm
-        title="Уверены?"
-        name="confirm"
-        buttonLabel="Удалить"
-        onClose={closeAllPopups}
-        children={(<></>)}
       />
 
       {/* Popup with notification shows API errors */}

@@ -31,7 +31,7 @@ export default class Main extends React.Component {
           userName: udata.name,
           userDescription: udata.about,
           userAvatar: udata.avatar,
-          cards: cardList.reverse()
+          cards: cardList
         })
       })
       .catch(err => this.props.api.handleError(err))
