@@ -73,8 +73,6 @@ function App() {
         </label>
       </PopupWithForm>
 
-
-
       <PopupWithForm name="newplace" title="Новое место" buttonLabel="Добавить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
         <label className="popup__form-field">
           <input className="popup__form-input popup__place-name" id="place-name-input" name="popup__place-name"

@@ -3,6 +3,7 @@ import React from "react";
 import btnClosePopup from '../images/btn-close.svg';
 
 export default class ImagePopup extends React.Component {
+
   render() {
     return (
       <div className={`popup popup_${this.props.name} ${this.props.card && 'popup_opened' }`}>
