@@ -91,7 +91,6 @@ function App() {
       <ImagePopup
         card={selectedCard}
         name="viewplace"
-        handleClick={handleCardClick}
         handleClose={closeAllPopups}
       />
 

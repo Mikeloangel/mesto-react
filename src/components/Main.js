@@ -11,8 +11,8 @@ export default class Main extends React.Component {
     super(props);
 
     this.state = {
-      userName: 'Not recieved yet',
-      userDescription: 'User description not set',
+      userName: undefined,
+      userDescription: undefined,
       userAvatar: defaultUserPic,
       cards: []
     }
@@ -51,12 +51,12 @@ export default class Main extends React.Component {
 
           <div className="section-user__info">
             <div className="section-user__container">
-              <h1 className="section-user__name">{this.state.userName}</h1>
+              <h1 className="section-user__name">{this.state.userName ?? 'Recieving...'}</h1>
               <button className="btn-edit section-user__edit" title="Редактировать профиль" name="section-user__edit-btn" type="button" onClick={this.props.onEditProfile}>
                 <img alt="Редактировать профиль" className="btn-edit__img section-user__edit-btn" src={btnEditUserInfo} />
               </button>
             </div>
-            <p className="section-user__description">{this.state.userDescription}</p>
+            <p className="section-user__description">{this.state.userDescription ?? 'Recieving...'}</p>
           </div>
           <button className="section-user__addpost btn-plus" title="Добавить пост" type="button" onClick={this.props.onAddPlace}></button>
         </section>
