@@ -13,7 +13,7 @@
     * CSS variables для удобства оптимизации кода в дальнейшем
     * flexbox / grid
     * медиа запросы для адаптивности сайта
-* Взаимодействие с backend API
+* Взаимодействие с backend APIы
 
 
 ## Какие технологии использованы?
@@ -29,8 +29,6 @@
 ## Внешние ссылки
 
 * [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
-
-* [Ссылка на проект на GitHub Pages](https://mikeloangel.github.io/mesto-react/index.html)
 
 * [Проект был портирован с ванильной версии](https://github.com/Mikeloangel/mesto-react)
 
