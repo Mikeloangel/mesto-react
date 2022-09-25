@@ -1,6 +1,6 @@
 import FormValidator from './FormValidator';
 
-export default function enableValidation(settings) {
+export default function enableFormValidation(settings) {
   const formValidators = [];
 
   const formList = Array.from(document.querySelectorAll(settings.formSelector));

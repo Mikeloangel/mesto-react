@@ -5,7 +5,14 @@ function DeleteConfirmationPopup({onClose, onSubmit, callbackObject}){
     onSubmit(callbackObject, handleSubmitButtonOnApiUpdate);
   }
   return (
-    <PopupWithForm title="Уверены?" name="confirm" buttonLabel="Удалить" isOpen={callbackObject !== null} onClose={onClose} onSubmit={handleSubmit} buttonLabelOnProcess="Удаление..."></PopupWithForm>
+    <PopupWithForm
+      title="Уверены?"
+      name="confirm"
+      buttonLabel="Удалить"
+      isOpen={callbackObject !== null}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+      buttonLabelOnProcess="Удаление..." />
   )
 }
 

@@ -7,7 +7,10 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
 
   const isOwn = card.owner._id === currentUser?._id;
   const cardDeleteButtonClassName = `place__trash ${isOwn ? 'place__trash_visible' : 'place__trash_hidden'}`;
-  const isLIked = card.likes.some(l => l._id === currentUser._id)
+  // const isLIked = card.likes.some(l => l._id === currentUser._id);
+  // in case of thousands of like
+  const isLIked = React.useMemo(() => card.likes.some(l => l._id === currentUser._id),[card.likes, currentUser]);
+
   const cardLikeButtonClassName = `place__like ${isLIked ? 'place__like_active' : ''}`;
 
   //Handlers
@@ -23,9 +26,8 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
     onCardDelete(card);
   }
 
-
   return (
-    (<li className="section-gallery__item place__item">
+    <li className="section-gallery__item place__item">
       <article className="place">
         <button className={cardDeleteButtonClassName} title="Удалить" type="button" onClick={handleDeleteClick}></button>
         <img alt={card.name} className="place__img" src={card.link} onClick={handleClick} />
@@ -37,7 +39,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           </div>
         </div>
       </article>
-    </li>)
+    </li>
   )
 }
 

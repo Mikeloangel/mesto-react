@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { currentUserContext } from '../contexts/currentUserContext';
 
 import api from "../utils/Api";
-import enableValidation from '../utils/enableValidation';
+import enableFormValidation from '../utils/enableFormValidation';
 
 import Header from './Header';
 import Main from './Main';
@@ -23,7 +23,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState(null);
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
   const [formValidators, setFormValidators] = useState([]);
 
   const [currentUser, setCurrentUser] = useState(undefined);
@@ -34,13 +34,11 @@ function App() {
   React.useEffect(() => {
     //retrieve currentUser
     api.getUserMe()
-      .then(userMe => {
-        setCurrentUser(userMe);
-      })
+      .then(setCurrentUser)
       .catch(err => api.handleError(err, setApiErrorMessage));
 
     //enable form validation
-    const validators = enableValidation({
+    const validators = enableFormValidation({
         formSelector: '.popup__form',
         inputSelector: '.popup__form-input',
         submitButtonSelector: '.popup__submit',
@@ -100,6 +98,8 @@ function App() {
   function handleUpdateUser(newInfo, submitButtonOnUpdate) {
     submitButtonOnUpdate(true);
 
+    console.log(newInfo)
+
     api.pathchUserMe(newInfo)
       .then(updatedUserInfo => {
         setCurrentUser(updatedUserInfo);
@@ -129,7 +129,7 @@ function App() {
     const likePromise = isLiked ? api.deleteLike(card._id) : api.putLike(card._id);
 
     likePromise
-      .then(newCard => setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c)))
+      .then(newCard => setCards((cards) => cards.map( c => c._id === card._id ? newCard : c)))
       .catch(err => api.handleError(err, setApiErrorMessage))
   }
 
