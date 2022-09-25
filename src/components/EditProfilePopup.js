@@ -29,12 +29,12 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     updateFieldSetter(fieldSetters, e.target.name, e.target.value);
   }
 
-  function handleSubmit() {
-    onUpdateUser({ name, about: description });
+  function handleSubmit(e, submitButtonOnUpdate) {
+    onUpdateUser({ name, about: description }, submitButtonOnUpdate);
   }
 
   return (
-    <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+    <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" buttonLabelOnProcess="Сохранение..." isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
       <label className="popup__form-field">
         <input className="popup__form-input popup__user-name" id="name-input" name="popup__user-name"
           placeholder="Представься, путешественник" required minLength="2" maxLength="40" onChange={handleChange} value={name} />

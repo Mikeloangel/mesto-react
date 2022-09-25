@@ -14,7 +14,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
-import enableValidation from '../utils/FormValidator';
+import enableValidation from '../utils/enableValidation';
 
 function App() {
   //States
@@ -87,22 +87,31 @@ function App() {
     setSelectedCard(null);
   }
 
-  function handleUpdateUser(newInfo) {
+  function handleUpdateUser(newInfo, submitButtonOnUpdate) {
+    submitButtonOnUpdate(true);
+
     api.pathchUserMe(newInfo)
-      .then(res => {
-        setCurrentUser(res);
+      .then(updatedUserInfo => {
+        setCurrentUser(updatedUserInfo);
         closeAllPopups();
       })
-      .catch(err => api.handleError(err));
+      .catch(err => api.handleError(err))
+      .finally(()=>{
+        submitButtonOnUpdate(false);
+      });
   }
 
-  function handleUpdateAvatar(link) {
+  function handleUpdateAvatar(link, submitButtonOnUpdate) {
+    submitButtonOnUpdate(true);
     api.patchUserAvatar(link)
       .then(userData => {
         setCurrentUser(userData);
         closeAllPopups();
       })
-      .catch(err => api.handleError(err));
+      .catch(err => api.handleError(err))
+      .finally(()=>{
+        submitButtonOnUpdate(false);
+      })
   }
 
   function handleCardLike(card) {
@@ -120,13 +129,17 @@ function App() {
       .catch(err => api.handleError(err))
   }
 
-  function handleAddCard(newCard) {
+  function handleAddCard(newCard, submitButtonOnUpdate) {
+    submitButtonOnUpdate(true);
     api.postCard(newCard)
       .then(addedCard => {
         setCards([addedCard, ...cards])
         closeAllPopups();
       })
       .catch(err => api.handleError(err))
+      .finally(()=>{
+        submitButtonOnUpdate(false);
+      });
   }
 
   return (

@@ -10,12 +10,12 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     setLink(avatarElement.current.value);
   }
 
-  function handleSubmit(e){
-    onUpdateAvatar(link);
+  function handleSubmit(e, submitButtonOnUpdate){
+    onUpdateAvatar(link, submitButtonOnUpdate);
   }
 
   return (
-    <PopupWithForm name="editavatar" title="Обновить аватар" buttonLabel="Сохранить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+    <PopupWithForm name="editavatar" title="Обновить аватар" buttonLabel="Сохранить" buttonLabelOnProcess="Обновление..." isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
       <label className="popup__form-field">
         <input ref={avatarElement} className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
           placeholder="Адресок подскажите?" type="url" required onChange={handleChange} />

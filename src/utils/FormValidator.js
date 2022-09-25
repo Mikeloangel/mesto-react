@@ -1,7 +1,7 @@
 /**
  * Class to enable form validation
  */
-class FormValidator {
+export default class FormValidator {
   /**
    *
    * @param {Object} settings object with settings
@@ -77,16 +77,3 @@ class FormValidator {
 }
 
 
-export default function enableValidation(settings) {
-  const formValidators = [];
-
-  const formList = Array.from(document.querySelectorAll(settings.formSelector));
-
-  formList.forEach(form => {
-    const formValidator = new FormValidator(settings, form);
-    formValidator.enableValidation();
-    formValidators[form.name] = formValidator;
-  });
-
-  return formValidators;
-}

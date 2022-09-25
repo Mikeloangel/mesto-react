@@ -17,12 +17,12 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
     updateFieldSetter(fieldSetters, e.target.name, e.target.value)
   }
 
-  function handleSubmit() {
-    onAddCard({ link, name });
+  function handleSubmit(e, submitButtonOnUpdate) {
+    onAddCard({ link, name }, submitButtonOnUpdate);
   }
 
   return (
-    <PopupWithForm name="newplace" title="Новое место" buttonLabel="Добавить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+    <PopupWithForm name="newplace" title="Новое место" buttonLabel="Добавить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit} buttonLabelOnProcess="Добавление места...">
       <label className="popup__form-field">
         <input className="popup__form-input popup__place-name" id="place-name-input" name="popup__place-name"
           placeholder="Какие места привлекли?" required minLength="2" maxLength="30" onChange={handleChange} />
