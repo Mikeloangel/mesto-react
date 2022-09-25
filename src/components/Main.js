@@ -26,13 +26,20 @@ function Main(props) {
     }
   }, [currentUser, props.api]);
 
+  //handlers
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     const likePromise = isLiked ? props.api.deleteLike(card._id) : props.api.putLike(card._id);
 
-    likePromise.then(newCard => {
-      setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
-    })
+    likePromise
+      .then(newCard => setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c)))
+      .catch(err => props.api.handleError(err))
+  }
+
+  function handleCardDelete(card){
+    props.api.deleteCard(card._id)
+      .then(() => setCards(cards.filter(item => item._id !== card._id)))
+      .catch(err => props.api.handleError(err))
   }
 
   return (
@@ -60,7 +67,7 @@ function Main(props) {
 
       <section aria-label="Фотографии из путешествий!" className="section section-gallery">
         <ul className="section-gallery__grid">
-          {cards.map(card => (<Card card={card} key={card._id} onCardClick={props.handleCardClick} onCardLike={handleCardLike} />))}
+          {cards.map(card => (<Card card={card} key={card._id} onCardClick={props.handleCardClick} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>))}
         </ul>
       </section>
     </main>

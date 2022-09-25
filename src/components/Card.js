@@ -1,7 +1,7 @@
 import React from "react";
 import { currentUserContext } from "../contexts/currentUserContext";
 
-function Card({card, onCardClick, onCardLike}) {
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   //Context
   const currentUser = React.useContext(currentUserContext);
 
@@ -11,20 +11,24 @@ function Card({card, onCardClick, onCardLike}) {
   const cardLikeButtonClassName = `place__like ${isLIked ? 'place__like_active' : ''}`;
 
   //Handlers
-  function handleClick(){
+  function handleClick() {
     onCardClick(card)
   }
 
-  function handleLikeClick(){
+  function handleLikeClick() {
     onCardLike(card);
+  }
+
+  function handleDeleteClick() {
+    onCardDelete(card);
   }
 
 
   return (
     (<li className="section-gallery__item place__item">
       <article className="place">
-        <button className={cardDeleteButtonClassName} title="Удалить" type="button"></button>
-        <img alt={card.name} className="place__img" src={card.link} onClick={handleClick}/>
+        <button className={cardDeleteButtonClassName} title="Удалить" type="button" onClick={handleDeleteClick}></button>
+        <img alt={card.name} className="place__img" src={card.link} onClick={handleClick} />
         <div className="place__body">
           <h2 className="place__title">{card.name}</h2>
           <div className="place__like-container">
