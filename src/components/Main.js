@@ -1,36 +1,31 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import Card from "./Card";
 
 import defaultUserPic from '../images/upic-blanc.jpg';
 import btnEditUserPic from '../images/btn-edit-user.svg';
 import btnEditUserInfo from '../images/btn-edit.svg';
+import { currentUserContext } from "../contexts/currentUserContext";
 
 function Main(props) {
-  const [userName, setUserName] = React.useState(undefined);
-  const [userDescription, setUserDescription] = React.useState(undefined);
-  const [userAvatar, setUserAvatar] = React.useState(defaultUserPic);
+  //States
   const [cards, setCards] = React.useState([]);
 
+  //Contexts
+  const currentUser = React.useContext(currentUserContext);
+  const {name: userName, avatar: userAvatar, about: userDescription} = currentUser || {name: 'Still fetching...', avatar: defaultUserPic, about:'Still fetching...'}
 
   //Mount effect
   React.useEffect(() => {
-    //Loads user info and then initial cards
-    const userPromise = props.api.getUserMe();
-    const initialCardsPromise = props.api.getInitialCards();
-
-    Promise.all([userPromise, initialCardsPromise])
-      .then(list => {
-        const [udata, cardList] = list;
-        const {name, about, avatar} = udata;
-
-        setUserName(name);
-        setUserDescription(about);
-        setUserAvatar(avatar);
-        setCards(cardList);
-      })
-      .catch(err => props.api.handleError(err))
-  }, [])
+    //Loads cards if we have currentUser info
+    if (currentUser) {
+      props.api
+        .getInitialCards()
+        .then(setCards
+      )
+        .catch(err => props.api.handleError(err))
+    }
+  }, [currentUser, props.api]);
 
   return (
     <main className="main">
@@ -45,12 +40,12 @@ function Main(props) {
 
         <div className="section-user__info">
           <div className="section-user__container">
-            <h1 className="section-user__name">{userName ?? 'Recieving...'}</h1>
+            <h1 className="section-user__name">{userName }</h1>
             <button className="btn-edit section-user__edit" title="Редактировать профиль" name="section-user__edit-btn" type="button" onClick={props.onEditProfile}>
               <img alt="Редактировать профиль" className="btn-edit__img section-user__edit-btn" src={btnEditUserInfo} />
             </button>
           </div>
-          <p className="section-user__description">{userDescription ?? 'Recieving...'}</p>
+          <p className="section-user__description">{userDescription }</p>
         </div>
         <button className="section-user__addpost btn-plus" title="Добавить пост" type="button" onClick={props.onAddPlace}></button>
       </section>
