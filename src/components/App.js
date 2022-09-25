@@ -9,6 +9,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 
 import React, { useState } from 'react';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   //Popups section
@@ -29,12 +30,13 @@ function App() {
       .catch(err => api.handleError(err));
   }, [])
 
+  //handlers
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
 
   function handleEditProfileClick() {
-    setIsEditProfilePopupOpen(!isEditAvatarPopupOpen);
+    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
   }
 
   function handleAddPlaceClick() {
@@ -52,6 +54,15 @@ function App() {
     setSelectedCard(null);
   }
 
+  function handleUpdateUser(newInfo){
+    api.pathchUserMe(newInfo)
+    .then(res => {
+      setCurrentUser(res);
+      closeAllPopups();
+    })
+    .catch(err => api.handleError(err));
+  }
+
   return (
     <currentUserContext.Provider value={currentUser}>
       <div className="root">
@@ -65,19 +76,7 @@ function App() {
           api={api} />
         <Footer />
 
-        <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-          <label className="popup__form-field">
-            <input className="popup__form-input popup__user-name" id="name-input" name="popup__user-name"
-              placeholder="Представься, путешественник" required minLength="2" maxLength="40" />
-            <span className="popup__form-error name-input-error">#</span>
-          </label>
-          <label className="popup__form-field">
-            <input className="popup__form-input popup__user-description" id="description-input"
-              name="popup__user-description" placeholder="Что влечет тебя к движению?" required minLength="2"
-              maxLength="200" />
-            <span className="popup__form-error description-input-error">#</span>
-          </label>
-        </PopupWithForm>
+        <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
         <PopupWithForm name="editavatar" title="Обновить аватар" buttonLabel="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
           <label className="popup__form-field">
