@@ -14,6 +14,8 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
+import enableValidation from '../utils/FormValidator';
+
 function App() {
   //States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -21,6 +23,7 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = React.useState([]);
+  const [formValidators, setFormValidators] = useState([]);
 
   const [currentUser, setCurrentUser] = useState(undefined);
 
@@ -32,6 +35,18 @@ function App() {
         setCurrentUser(userMe);
       })
       .catch(err => api.handleError(err));
+
+    //enable form validation
+    const validators = enableValidation({
+        formSelector: '.popup__form',
+        inputSelector: '.popup__form-input',
+        submitButtonSelector: '.popup__submit',
+        inactiveButtonClass: 'popup__submit_disabled',
+        inputErrorClass: 'popup__form-input_type_error',
+        errorClass: 'popup__form-error_visible'
+      })
+
+      setFormValidators(validators);
   }, [])
 
   //on CurrentUser changes retrieves initial cards
@@ -48,14 +63,17 @@ function App() {
   //handlers
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
+    formValidators['popup__form_editavatar'].revalidate();
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
+    formValidators['popup__form_edituser'].revalidate();
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
+    formValidators['popup__form_newplace'].revalidate();
   }
 
   function handleCardClick(card) {
@@ -69,22 +87,22 @@ function App() {
     setSelectedCard(null);
   }
 
-  function handleUpdateUser(newInfo){
+  function handleUpdateUser(newInfo) {
     api.pathchUserMe(newInfo)
-    .then(res => {
-      setCurrentUser(res);
-      closeAllPopups();
-    })
-    .catch(err => api.handleError(err));
+      .then(res => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch(err => api.handleError(err));
   }
 
-  function handleUpdateAvatar(link){
+  function handleUpdateAvatar(link) {
     api.patchUserAvatar(link)
-    .then(userData => {
-      setCurrentUser(userData);
-      closeAllPopups();
-    })
-    .catch(err => api.handleError(err));
+      .then(userData => {
+        setCurrentUser(userData);
+        closeAllPopups();
+      })
+      .catch(err => api.handleError(err));
   }
 
   function handleCardLike(card) {
@@ -96,19 +114,19 @@ function App() {
       .catch(err => api.handleError(err))
   }
 
-  function handleCardDelete(card){
+  function handleCardDelete(card) {
     api.deleteCard(card._id)
       .then(() => setCards(cards.filter(item => item._id !== card._id)))
       .catch(err => api.handleError(err))
   }
 
-  function handleAddCard(newCard){
+  function handleAddCard(newCard) {
     api.postCard(newCard)
-    .then(addedCard=>{
-      setCards([addedCard, ...cards])
-      closeAllPopups();
-    })
-    .catch(err => api.handleError(err))
+      .then(addedCard => {
+        setCards([addedCard, ...cards])
+        closeAllPopups();
+      })
+      .catch(err => api.handleError(err))
   }
 
   return (
@@ -124,14 +142,14 @@ function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-           />
+        />
         <Footer />
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddCard}/>
+        <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddCard={handleAddCard} />
 
         <PopupWithForm title="Уверены?" name="confirm" buttonLabel="Удалить" onClose={closeAllPopups}></PopupWithForm>
 

@@ -12,7 +12,6 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
     'popup__place-url': setLink
   }
 
-
   //handlers
   function handleChange(e) {
     updateFieldSetter(fieldSetters, e.target.name, e.target.value)
