@@ -16,6 +16,18 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  //On mount effects
+  React.useEffect(()=>{
+    //retrieve currentUser
+    api.getUserMe()
+      .then(userMe => {
+        setCurrentUser(userMe);
+      })
+      .catch(err => api.handleError(err));
+  },[])
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
