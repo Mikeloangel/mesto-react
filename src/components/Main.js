@@ -13,7 +13,7 @@ function Main(props) {
 
   //Contexts
   const currentUser = React.useContext(currentUserContext);
-  const {name: userName, avatar: userAvatar, about: userDescription} = currentUser || {name: 'Still fetching...', avatar: defaultUserPic, about:'Still fetching...'}
+  const { name: userName, avatar: userAvatar, about: userDescription } = currentUser || { name: 'Still fetching...', avatar: defaultUserPic, about: 'Still fetching...' }
 
   //Mount effect
   React.useEffect(() => {
@@ -21,11 +21,19 @@ function Main(props) {
     if (currentUser) {
       props.api
         .getInitialCards()
-        .then(setCards
-      )
+        .then(setCards)
         .catch(err => props.api.handleError(err))
     }
   }, [currentUser, props.api]);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const likePromise = isLiked ? props.api.deleteLike(card._id) : props.api.putLike(card._id);
+
+    likePromise.then(newCard => {
+      setCards((cards) => cards.map((c) => c._id === card._id ? newCard : c));
+    })
+  }
 
   return (
     <main className="main">
@@ -40,19 +48,19 @@ function Main(props) {
 
         <div className="section-user__info">
           <div className="section-user__container">
-            <h1 className="section-user__name">{userName }</h1>
+            <h1 className="section-user__name">{userName}</h1>
             <button className="btn-edit section-user__edit" title="Редактировать профиль" name="section-user__edit-btn" type="button" onClick={props.onEditProfile}>
               <img alt="Редактировать профиль" className="btn-edit__img section-user__edit-btn" src={btnEditUserInfo} />
             </button>
           </div>
-          <p className="section-user__description">{userDescription }</p>
+          <p className="section-user__description">{userDescription}</p>
         </div>
         <button className="section-user__addpost btn-plus" title="Добавить пост" type="button" onClick={props.onAddPlace}></button>
       </section>
 
       <section aria-label="Фотографии из путешествий!" className="section section-gallery">
         <ul className="section-gallery__grid">
-          {cards.map(card => (<Card card={card} key={card._id} onCardClick={props.handleCardClick} />))}
+          {cards.map(card => (<Card card={card} key={card._id} onCardClick={props.handleCardClick} onCardLike={handleCardLike} />))}
         </ul>
       </section>
     </main>

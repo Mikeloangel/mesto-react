@@ -14,6 +14,7 @@
 
 @import url(./blocks/place/place.css);
 @import url(./blocks/place/__trash/place__trash.css);
+@import url(./blocks/place/__trash_hidden/place__trash_hidden.css);
 @import url(./blocks/place/__img/place__img.css);
 @import url(./blocks/place/__body/place__body.css);
 @import url(./blocks/place/__title/place__title.css);
