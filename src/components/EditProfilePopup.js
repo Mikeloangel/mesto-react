@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { currentUserContext } from "../contexts/currentUserContext";
+import updateFieldSetter from "../utils/updateFormFieldSetter";
 import PopupWithForm from "./PopupWithForm";
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
@@ -23,18 +24,15 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
   //handlers
   function handleChange(e) {
-    if (fieldSetters[e.target.name] && typeof fieldSetters[e.target.name] === 'function') {
-      fieldSetters[e.target.name](e.target.value);
-    }
+    updateFieldSetter(fieldSetters,e.target.name,e.target.value);
   }
 
-  function handleSubmit(e){
-    e.preventDefault();
+  function handleSubmit(){
     onUpdateUser({name,about:description});
   }
 
   return (
-    <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" isOpen={isOpen} onClose={onClose} onSumbit={handleSubmit}>
+    <PopupWithForm name="edituser" title="Редактировать профиль" buttonLabel="Сохранить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
       <label className="popup__form-field">
         <input className="popup__form-input popup__user-name" id="name-input" name="popup__user-name"
           placeholder="Представься, путешественник" required minLength="2" maxLength="40" onChange={handleChange}  />

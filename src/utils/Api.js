@@ -37,6 +37,11 @@ class Api {
 
   pathchUserMe = body => this._getRouteRequest('/users/me','PATCH',body);
 
+  /**
+   *
+   * @param {Object} body {link,name}
+   * @returns on success parsed JSON with new card will all required fields
+   */
   postCard = body => this._getRouteRequest('/cards','POST',body);
 
   deleteCard = id => this._getRouteRequest(`/cards/${id}`,'DELETE');
@@ -48,7 +53,7 @@ class Api {
   /**
    *
    * @param {String} url valid link
-   * @returns on success JSON with current user
+   * @returns on success parsed JSON with current user
    */
   patchUserAvatar = url => this._getRouteRequest(`/users/me/avatar`,'PATCH',{avatar:url});
 }
