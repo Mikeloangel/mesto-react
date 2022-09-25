@@ -45,6 +45,11 @@ class Api {
 
   deleteLike = id =>this._getRouteRequest(`/cards/${id}/likes`,'DELETE');
 
+  /**
+   *
+   * @param {String} url valid link
+   * @returns on success JSON with current user
+   */
   patchUserAvatar = url => this._getRouteRequest(`/users/me/avatar`,'PATCH',{avatar:url});
 }
 

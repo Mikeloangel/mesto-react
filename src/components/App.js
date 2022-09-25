@@ -10,6 +10,7 @@ import ImagePopup from './ImagePopup';
 
 import React, { useState } from 'react';
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   //Popups section
@@ -63,6 +64,15 @@ function App() {
     .catch(err => api.handleError(err));
   }
 
+  function handleUpdateAvatar(link){
+    api.patchUserAvatar(link)
+    .then(userData => {
+      setCurrentUser(userData);
+      closeAllPopups();
+    })
+    .catch(err => api.handleError(err));
+  }
+
   return (
     <currentUserContext.Provider value={currentUser}>
       <div className="root">
@@ -78,13 +88,7 @@ function App() {
 
         <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-        <PopupWithForm name="editavatar" title="Обновить аватар" buttonLabel="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-          <label className="popup__form-field">
-            <input className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
-              placeholder="Адресок подскажите?" type="url" required />
-            <span className="popup__form-error avatar-input-error">#</span>
-          </label>
-        </PopupWithForm>
+        <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/>
 
         <PopupWithForm name="newplace" title="Новое место" buttonLabel="Добавить" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
           <label className="popup__form-field">
