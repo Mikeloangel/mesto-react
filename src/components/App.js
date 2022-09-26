@@ -26,7 +26,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [formValidators, setFormValidators] = useState([]);
 
-  const [currentUser, setCurrentUser] = useState(undefined);
+  const [currentUser, setCurrentUser] = useState({});
   const [selecetdCardToDelete, setSelecetdCardToDelete] = useState(null);
   const [apiErrorMessage, setApiErrorMessage] = useState(null);
 
@@ -97,8 +97,6 @@ function App() {
 
   function handleUpdateUser(newInfo, submitButtonOnUpdate) {
     submitButtonOnUpdate(true);
-
-    console.log(newInfo)
 
     api.pathchUserMe(newInfo)
       .then(updatedUserInfo => {

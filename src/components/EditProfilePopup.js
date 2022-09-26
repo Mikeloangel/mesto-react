@@ -8,8 +8,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const currentUser = useContext(currentUserContext)
 
   //states
-  const [name, setName] = useState(currentUser?.name || '');
-  const [description, setDescription] = useState(currentUser?.about || '');
+  const [name, setName] = useState(currentUser.name || '');
+  const [description, setDescription] = useState(currentUser.about || '');
 
   const fieldSetters = {
     'popup__user-name': setName,
@@ -17,12 +17,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   }
 
   //effects
+  //updates form inputs on open and on current user changes
   useEffect(() => {
-    if (currentUser) {
-      setName(currentUser.name);
-      setDescription(currentUser.about);
-    }
-  }, [currentUser]);
+      setName(currentUser.name || '');
+      setDescription(currentUser.about || '');
+  }, [isOpen, currentUser]);
 
   //handlers
   function handleChange(e) {
