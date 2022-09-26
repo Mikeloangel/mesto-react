@@ -6,12 +6,14 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const avatarElement = useRef();
 
   //States
+  const [formErrorMessages, setFormErrorMessages] = useState({});
   const [link, setLink] = useState('');
 
   //Effect
   //clears form input on open
   useEffect(()=>{
     setLink('');
+    setFormErrorMessages({'popup__avatar-link': ''})
   },[isOpen]);
 
   //Handlers
@@ -23,6 +25,10 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     onUpdateAvatar(link, submitButtonOnUpdate);
   }
 
+  function handleErrorMessage(inputs){
+    setFormErrorMessages(inputs)
+  }
+
   return (
     <PopupWithForm
       name="editavatar"
@@ -31,12 +37,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       buttonLabelOnProcess="Обновление..."
       isOpen={isOpen}
       onClose={onClose}
-      onSubmit={handleSubmit}>
-
+      onSubmit={handleSubmit}
+      handleFormErrorMessages={handleErrorMessage}
+      >
       <label className="popup__form-field">
         <input ref={avatarElement} className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
           placeholder="Адресок подскажите?" type="url" required onChange={handleChange} value={link} />
-        <span className="popup__form-error avatar-input-error">#</span>
+        <span className="popup__form-error avatar-input-error popup__form-error_visible">{formErrorMessages['popup__avatar-link']}</span>
       </label>
     </PopupWithForm>
   )

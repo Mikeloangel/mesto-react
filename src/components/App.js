@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { currentUserContext } from '../contexts/currentUserContext';
 
 import api from "../utils/Api";
-import enableFormValidation from '../utils/enableFormValidation';
 
 import Header from './Header';
 import Main from './Main';
@@ -15,7 +14,6 @@ import AddPlacePopup from './AddPlacePopup';
 import DeleteConfirmationPopup from './DeleteConfirmationPopup';
 import PopupWithNotification from './PopupWithNotification';
 
-
 function App() {
   //States
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -24,7 +22,6 @@ function App() {
 
   const [selectedCard, setSelectedCard] = useState(null);
   const [cards, setCards] = useState([]);
-  const [formValidators, setFormValidators] = useState([]);
 
   const [currentUser, setCurrentUser] = useState({});
   const [selecetdCardToDelete, setSelecetdCardToDelete] = useState(null);
@@ -36,18 +33,6 @@ function App() {
     api.getUserMe()
       .then(setCurrentUser)
       .catch(err => api.handleError(err, setApiErrorMessage));
-
-    //enable form validation
-    const validators = enableFormValidation({
-        formSelector: '.popup__form',
-        inputSelector: '.popup__form-input',
-        submitButtonSelector: '.popup__submit',
-        inactiveButtonClass: 'popup__submit_disabled',
-        inputErrorClass: 'popup__form-input_type_error',
-        errorClass: 'popup__form-error_visible'
-      })
-
-      setFormValidators(validators);
   }, [])
 
   //on CurrentUser changes retrieves initial cards
@@ -64,17 +49,14 @@ function App() {
   //handlers
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
-    formValidators['popup__form_editavatar'].revalidate();
   }
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
-    formValidators['popup__form_edituser'].revalidate();
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
-    formValidators['popup__form_newplace'].revalidate();
   }
 
   function handleCardClick(card) {
