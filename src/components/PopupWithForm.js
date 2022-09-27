@@ -39,7 +39,7 @@ function PopupWithForm({name, isOpen, onClose, title, children, buttonLabel = 'S
 
   // button should be active also when there are no children (i.e. confirmation usage)
   const isTotalValid = formIsValid || !children;
-  const submitButtonClassName = `popup__submit ${isTotalValid || 'popup__submit_disabled'}`;
+  const submitButtonClassName = `popup__submit ${!isTotalValid && 'popup__submit_disabled'}`;
 
   return (
     <div className={`popup popup_${name} ${isOpen && 'popup_opened'}`}>
@@ -51,7 +51,7 @@ function PopupWithForm({name, isOpen, onClose, title, children, buttonLabel = 'S
 
         <form className="popup__form" name={`popup__form_${name}`} onSubmit={handleSubmit} onChange={handleChange} noValidate>
           {children}
-          <button className={submitButtonClassName} type="submit" disabled={ !isTotalValid }>
+          <button className={submitButtonClassName} type="submit" disabled={ !isTotalValid || isProcessingForm}>
             { isProcessingForm ? buttonLabelOnProcess : buttonLabel }
           </button>
         </form>

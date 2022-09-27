@@ -42,7 +42,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       >
       <label className="popup__form-field">
         <input ref={avatarElement} className="popup__form-input popup__avatar-link" id="avatar-input" name="popup__avatar-link"
-          placeholder="Адресок подскажите?" type="url" required onChange={handleChange} value={link} />
+          placeholder="Адрес картинки" type="url" required onChange={handleChange} value={link} />
         <span className="popup__form-error avatar-input-error popup__form-error_visible">{formErrorMessages['popup__avatar-link']}</span>
       </label>
     </PopupWithForm>

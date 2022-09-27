@@ -38,12 +38,10 @@ function App() {
   //on CurrentUser changes retrieves initial cards
   React.useEffect(() => {
     //Loads cards if we have currentUser info
-    if (currentUser) {
-      api
-        .getInitialCards()
-        .then(setCards)
-        .catch(err => api.handleError(err, setApiErrorMessage));
-    }
+    api
+      .getInitialCards()
+      .then(setCards)
+      .catch(err => api.handleError(err, setApiErrorMessage));
   }, [currentUser]);
 
   //handlers
@@ -68,9 +66,8 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
 
-    setSelecetdCardToDelete(null);
-
     setSelectedCard(null);
+    setSelecetdCardToDelete(null);
   }
 
   function closeNotificationPopup(){
